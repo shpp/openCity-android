@@ -1,0 +1,23 @@
+<resources>
+    <string
+        name="google_maps_key"
+        templateMergeStrategy="preserve"
+        translatable="false">
+            AIzaSyDiZ5o7No2YVWH7plEejs8YU6joGQXrnac
+    </string>
+    <string name="app_name">CityGuide</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Налаштування</string>
+    <string name="navigation_drawer_header">Категорії</string>
+    <string name="navigation_drawer_map">Карта</string>
+    <string name="contact_us">Зв\'язатися з нами</string>
+    <string name="call_social_taxi">Call social taxi</string>
+    <string name="street_prefix">вул.</string>
+    <string name="search_here">Search here</string>
+</resources>
