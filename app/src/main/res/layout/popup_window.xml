@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#3CB371"
+                android:padding="20dp">
+
+    <TextView
+        android:id="@+id/write_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="10dp"
+        android:text="Напишіть нам!"
+        android:textColor="#ffffff"
+        android:textSize="30sp"/>
+
+    <EditText
+        android:id="@+id/user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/write_us"
+        android:layout_marginTop="40dp"
+        android:ems="12"
+        android:backgroundTint="#ffffff"
+        android:hint="Email"
+        android:textColorHint="#ffffff"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/user_comment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/user_email"
+        android:layout_marginLeft="1dp"
+        android:layout_marginTop="50dp"
+        android:text="Ваш коментар"
+        android:textColor="#ffffff"
+        android:textSize="20sp"/>
+
+    <EditText
+        android:id="@+id/user_comment_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/user_comment_title"
+        android:layout_marginTop="20dp"
+        android:ems="12"
+        android:backgroundTint="#ffffff"
+        android:inputType="textMultiLine"
+        android:maxLines="1"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/send_user_info"
+        android:layout_width="165dp"
+        android:layout_height="42dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/user_comment_content"
+        android:layout_marginTop="30dp"
+        android:textColor="#3CB371"
+        android:textSize="12sp"
+        android:backgroundTint="#ffffff"
+        android:textAlignment="gravity"
+        android:drawableRight="@drawable/ic_send_black_18dp"
+        android:drawableTint="#3CB371"
+        android:text="Відправити"/>
+
+
+</RelativeLayout>

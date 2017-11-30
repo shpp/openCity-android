@@ -1,6 +1,9 @@
 package me.kowo.opencity.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -15,10 +18,16 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -59,6 +68,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerSuggestionAdapter recyclerSuggestionAdapter;
     private HashMap<String, Integer> ids;
     private boolean isMenuCreated = false;
+    private Context mContext;
+    private Activity mActivity;
+    private RelativeLayout mRelativeLayout;
+    private DrawerLayout mDrawerLayout;
+    private PopupWindow mPopupWindow;
+    private Button mSendInfo;
+    private EditText email,comment;
     final public static String TAG = "MainActivity";
 
     @Inject
@@ -75,6 +91,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         setUpBarAndDrawerLayout();
         getCategories();
+
+        mContext = getApplicationContext();
+        mActivity = MainActivity.this;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(final MenuItem menuItem) {
+
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case R.id.contact_us:
+                       // Toast.makeText(MainActivity.this, "Contact Selected", Toast.LENGTH_SHORT).show();
+                        mDrawer.closeDrawer(Gravity.LEFT);
+
+                        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+                        View customView = inflater.inflate(R.layout.popup_window,null);
+                        mPopupWindow = new PopupWindow(
+                                customView,
+                                DrawerLayout.LayoutParams.WRAP_CONTENT,
+                                DrawerLayout.LayoutParams.WRAP_CONTENT
+
+                        );
+                        mPopupWindow.setFocusable(true);
+
+                        email = (EditText)customView.findViewById(R.id.user_email);
+
+                        comment = (EditText)customView.findViewById(R.id.user_comment_content);
+
+                        if(Build.VERSION.SDK_INT>=21){
+                            mPopupWindow.setElevation(5.0f);
+                        }
+                        mSendInfo = (Button)customView.findViewById(R.id.send_user_info);
+                        mSendInfo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopupWindow.dismiss();
+                                Toast.makeText(mContext,email.getText().toString()+"\n"+comment.getText().toString(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        mPopupWindow.showAtLocation(mDrawerLayout, Gravity.CENTER,0,0);
+
+                        return true;
+                    default:
+                        return true;
+                }
+
+            }
+        });
     }
 
     public void setUpBarAndDrawerLayout() {
