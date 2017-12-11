@@ -20,4 +20,20 @@
     <string name="call_social_taxi">Call social taxi</string>
     <string name="street_prefix">вул.</string>
     <string name="search_here">Search here</string>
+
+    <string name="social_taxi">Соціальне таксі</string>
+    <string name="social_taxi_message_text">Щоб викликати соціальне таксі, вам потрібно зв\'язатися з територіальним центром соціального обслуговування. Скористатися послугою можуть особи, які стоять на обліку в управлінні соціального захисту населення. Замовити таксі можливо у будні з 8:00 до 17:00 тільки у державні установи. </string>
+    <string name="social_taxi_address1">Фортечний район (за три доби тричі на місяць): вул. Шатила, 12</string>
+    <string name="social_taxi_address2">Подільський район (за добу): вул. Архітектора Паученка 53/39</string>
+    <string name="phones">телефони:</string>
+    <string name="phone">телефон:</string>
+    <string name="email">e-mail:</string>
+    <string name="social_taxi_phoneNumber1">(0522) 37-12-75, (099) 666-29-41</string>
+    <string name="social_taxi_phoneNumber2">(0522) 22-08-67</string>
+    <string name="social_taxi_email_address1">kirtercentr@mail.ru</string>
+    <string name="social_taxi_email_address2">len.upszn@krmr.gov.ua</string>
+    <string name="yes">Добре</string>
+    <string name="low_trolley_bus">Низькополий тролейбус</string>
+    <string name="low_trolley_bus_message_text">Щоб дізнатися, де знаходиться низькополий тролейбус, наберіть цей номер:</string>
+    <string name="low_trolley_phone_number">(095)726-09-39</string>
 </resources>

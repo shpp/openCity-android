@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/trolleyBusTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@string/low_trolley_bus"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+
+            <TextView
+                android:id="@+id/trolleyMessageText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:gravity="fill_horizontal"
+                android:layout_below="@id/trolleyBusTitle"
+                android:text="@string/low_trolley_bus_message_text"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <TextView
+                android:id="@+id/trolleyPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorBlue"
+                android:gravity="fill_horizontal"
+                android:layout_below="@id/trolleyMessageText"
+                android:text="@string/low_trolley_phone_number"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+
+
+            <Button
+                android:id="@+id/yesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@color/colorPrimary"
+                android:layout_below="@id/trolleyPhoneNumber"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="@string/yes"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>

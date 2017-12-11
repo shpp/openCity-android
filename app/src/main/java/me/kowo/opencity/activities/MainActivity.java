@@ -1,5 +1,6 @@
 package me.kowo.opencity.activities;
 
+import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,6 +40,8 @@ import butterknife.ButterKnife;
 import me.kowo.opencity.R;
 import me.kowo.opencity.adapters.RecyclerSuggestionAdapter;
 import me.kowo.opencity.app.App;
+import me.kowo.opencity.dialogs.LowTrolleyBusDialog;
+import me.kowo.opencity.dialogs.SocialTaxiDialog;
 import me.kowo.opencity.eventbus.Event;
 import me.kowo.opencity.eventbus.EventMessage;
 import me.kowo.opencity.models.Category;
@@ -61,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private boolean isMenuCreated = false;
     final public static String TAG = "MainActivity";
 
+    DialogFragment socialTaxi, lowTrolleyBus;
+
     @Inject
     DataProvider dataProvider;
 
@@ -77,6 +83,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getCategories();
     }
 
+
+
+
+
     public void setUpBarAndDrawerLayout() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.hideOverflowMenu();
@@ -91,10 +101,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationViewMenu = mNavigationView.getMenu();
 
+
+
         initSearch(toolbar);
 
         toggle.syncState();
-        mNavigationView.setNavigationItemSelectedListener(this);
+        //mNavigationView.setNavigationItemSelectedListener(this);
+
+        socialTaxi = new SocialTaxiDialog();
+        lowTrolleyBus = new LowTrolleyBusDialog();
+
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(final MenuItem menuItem) {
+
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case R.id.contact_us:
+                        Toast.makeText(MainActivity.this, "Contact Selected", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.social_taxi:
+                        socialTaxi.show(getFragmentManager(), "socialTaxi");
+                        return true;
+                    case R.id.low_trolley_bus:
+                        lowTrolleyBus.show(getFragmentManager(), "lowTrolleyBus");
+                        return true;
+                    default:
+                        return true;
+                }
+
+            }
+        });
+
         suggestionRecycler = (RecyclerView) findViewById(R.id.suggestion_recycler);
 
         mDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -120,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
+
 
     public void setUpSuggestionAdapter(ArrayList<Place> places) {
         if (recyclerSuggestionAdapter == null) {
@@ -318,4 +358,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return menu.add(R.id.places_list, Menu.NONE, 0, itemName).setCheckable(true)
                 .setChecked(checked).setActionView(R.layout.checkbox);
     }
+
+
 }
