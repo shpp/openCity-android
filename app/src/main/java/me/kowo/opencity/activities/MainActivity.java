@@ -140,8 +140,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             public void onClick(View v) {
                                 mPopupWindow.dismiss();
                                 //send data to the server
+                                if (email.getText().toString().isEmpty() || comment.getText().toString().isEmpty()){
+                                    Toast.makeText(getApplicationContext(),"Будь ласка, введіть пошту та коментар",Toast.LENGTH_SHORT).show();
+                                }else {
                                 UserFeedback feedback = new UserFeedback(email.getText().toString(),comment.getText().toString());
                                 sendData(feedback.getEmail(), feedback.getComment());
+                                }
                             }
                         });
                         mPopupWindow.showAtLocation(mDrawerLayout, Gravity.CENTER,0,0);
@@ -173,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Toast.makeText(getApplicationContext(),"Data sent",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Дані надіслані",Toast.LENGTH_SHORT).show();
                 if (response.isSuccessful()){
                     Log.d(TAG, "onResponse: "+response.body()+"\n"+"Response code: "+String.valueOf(response.code()));
                 }else{
@@ -184,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"Failed to send data",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Помилка передачі даних",Toast.LENGTH_SHORT).show();
             }
         });
     }
