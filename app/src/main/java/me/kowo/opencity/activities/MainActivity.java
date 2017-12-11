@@ -49,11 +49,22 @@ import me.kowo.opencity.adapters.RecyclerSuggestionAdapter;
 import me.kowo.opencity.app.App;
 import me.kowo.opencity.eventbus.Event;
 import me.kowo.opencity.eventbus.EventMessage;
+import me.kowo.opencity.interfaces.FeedbackClient;
 import me.kowo.opencity.models.Category;
 import me.kowo.opencity.models.CategoryPlaces;
 import me.kowo.opencity.models.Place;
+import me.kowo.opencity.models.UserFeedback;
 import me.kowo.opencity.providers.DataProvider;
 import me.kowo.opencity.utils.Utils;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static me.kowo.opencity.constants.Constants.MIN_LEN_TO_QUERY;
 import static me.kowo.opencity.constants.Constants.PREF_TAG;
@@ -128,7 +139,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void onClick(View v) {
                                 mPopupWindow.dismiss();
-                                Toast.makeText(mContext,email.getText().toString()+"\n"+comment.getText().toString(),Toast.LENGTH_SHORT).show();
+                                //send data to the server
+                                UserFeedback feedback = new UserFeedback(email.getText().toString(),comment.getText().toString());
+                                sendData(feedback.getEmail(), feedback.getComment());
                             }
                         });
                         mPopupWindow.showAtLocation(mDrawerLayout, Gravity.CENTER,0,0);
@@ -141,6 +154,41 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
+    public void sendData(String email, String text){
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://opencity.shpp.me/api/v1/")
+                .addConverterFactory(ScalarsConverterFactory.create());
+        String userEmail = email;
+        RequestBody mail =
+                RequestBody.create(
+                        MediaType.parse("text/plain"), userEmail);
+        String userText = text;
+        RequestBody message =
+                RequestBody.create(
+                        MediaType.parse("text/plain"), userText);
+        Retrofit retrofit = builder.build();
+        FeedbackClient client = retrofit.create(FeedbackClient.class);
+        Call<ResponseBody> call = client.sendData(mail,message);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Toast.makeText(getApplicationContext(),"Data sent",Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()){
+                    Log.d(TAG, "onResponse: "+response.body()+"\n"+"Response code: "+String.valueOf(response.code()));
+                }else{
+                    Log.e("Error Code", String.valueOf(response.code()));
+                    Log.e("Error Body", response.errorBody().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getApplicationContext(),"Failed to send data",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public void setUpBarAndDrawerLayout() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
